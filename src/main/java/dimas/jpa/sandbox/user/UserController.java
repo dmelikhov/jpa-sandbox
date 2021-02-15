@@ -35,6 +35,7 @@ public class UserController {
         15) коллекции в полях энтити
         16) каскады
         17) джоины jpql с дубликатами
+        18) @Repository (QuerydslRepositorySupport)
      */
 
     private final UserService userService;
