@@ -7,32 +7,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@Table(name = "user_group")
 @NoArgsConstructor @AllArgsConstructor @Builder
-@Getter @Setter @ToString(exclude = "group")
-public class User {
+@Getter @Setter @ToString(exclude = "users")
+public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String name;
 
-    private String password;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Group group;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
-    private List<Post> posts;
+    @OneToMany(mappedBy = "group")
+    private List<User> users;
 }

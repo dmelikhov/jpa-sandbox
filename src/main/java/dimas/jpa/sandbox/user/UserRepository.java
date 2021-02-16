@@ -40,16 +40,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "select u.id " +
             "from User u " +
             "join u.posts p " +
-            "where p.language.code = :lang " +
+            "where u.group.id = :groupId " +
+            "  and p.language.code = :lang " +
             "  and p.text like %:#{escape(#query)}% escape :#{escapeCharacter()}")
-    Page<Long> findIdsByLanguageAndQuery(String lang, String query, Pageable pageable);
+    Page<Long> findIdsByGroupAndLanguageAndQuery(Long groupId, String lang, String query, Pageable pageable);
 
     @EntityGraph(attributePaths = {"posts", "posts.language"})
     List<User> findAllWithPostsByIdIn(List<Long> ids);
 
-    default Page<User> findAllByLanguageAndQuery(String lang, String query, Pageable pageable) {
-        Page<Long> idsPage = findIdsByLanguageAndQuery(lang, query, pageable);
-        List<User> users = findAllWithPostsByIdIn(idsPage.getContent());
-        return new PageImpl<>(users, pageable, idsPage.getTotalElements());
+    default Page<User> findAllByGroupAndLanguageAndQuery(Long groupId, String lang, String query, Pageable pageable) {
+        Page<Long> ids = findIdsByGroupAndLanguageAndQuery(groupId, lang, query, pageable);
+        List<User> users = findAllWithPostsByIdIn(ids.getContent());
+        return new PageImpl<>(users, pageable, ids.getTotalElements());
     }
 }
