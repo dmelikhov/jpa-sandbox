@@ -1,4 +1,4 @@
-package dimas.jpa.sandbox.user;
+package dimas.jpa.sandbox.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,24 +15,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "language_id"}))
 @NoArgsConstructor @AllArgsConstructor @Builder
-@Getter @Setter @ToString(exclude = "user")
-public class Post {
+@Getter @Setter @ToString
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String text;
+    private String username;
+
+    private String password;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Language language;
+    private Team team;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @BatchSize(size = 10)
+    private List<Post> posts;
 }

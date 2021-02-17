@@ -1,4 +1,4 @@
-package dimas.jpa.sandbox.user;
+package dimas.jpa.sandbox.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,22 +11,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.List;
 
 @Entity
-@Table(name = "user_group")
 @NoArgsConstructor @AllArgsConstructor @Builder
-@Getter @Setter @ToString(exclude = "users")
-public class Group {
+@Getter @Setter @ToString
+public class Language {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
-    @OneToMany(mappedBy = "group")
-    private List<User> users;
+    private String code;
 }
