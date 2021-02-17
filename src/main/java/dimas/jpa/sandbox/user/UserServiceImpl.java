@@ -57,35 +57,34 @@ public class UserServiceImpl implements UserService, ApplicationRunner {
         Language en = Language.builder().code("en").build();
         Language ru = Language.builder().code("ru").build();
 
-        User user1 = User.builder().username("brownfrog676").password("mandy").team(team).build();
+        User user1 = User.builder().username("BrownFrog676").password("mandy").team(team).build();
         user1.setPosts(List.of(
                 Post.builder().text("foo bar baz").language(en).user(user1).build(),
                 Post.builder().text("фуу бар баз").language(ru).user(user1).build()
         ));
 
-        User user2 = User.builder().username("redgorilla701").password("massimo").team(team).build();
+        User user2 = User.builder().username("RedGorilla701").password("massimo").team(team).build();
         user2.setPosts(List.of(
                 Post.builder().text("lol kek wut").language(en).user(user2).build(),
                 Post.builder().text("лол кек ват").language(ru).user(user2).build()
         ));
 
-        User user3 = User.builder().username("crazyostrich818").password("newlife").team(team).build();
+        User user3 = User.builder().username("CrazyOstrich818").password("figaro").team(team).build();
         user3.setPosts(List.of(
                 Post.builder().text("foo bar baz").language(en).user(user3).build(),
                 Post.builder().text("фуу бар баз").language(ru).user(user3).build()
         ));
 
-        User user4 = User.builder().username("bigduck151").password("golfer1").team(team).build();
+        User user4 = User.builder().username("BigDuck151").password("golfer1").team(team).build();
         user4.setPosts(List.of(
                 Post.builder().text("lol kek wut").language(en).user(user4).build(),
                 Post.builder().text("лол кек ват").language(ru).user(user4).build()
         ));
 
-        User user5 = User.builder().username("yellowgorilla497").password("talisman").team(team).build();
+        User user5 = User.builder().username("BlueGorilla497").password("talisman").team(team).build();
         user5.setPosts(List.of(
                 Post.builder().text("foo bar baz").language(en).user(user5).build(),
-                Post.builder().text("фуу бар баз").language(ru).user(user5).build()
-        ));
+                Post.builder().text("фуу бар баз").language(ru).user(user5).build()));
 
         userRepository.saveAll(List.of(user1, user2, user3, user4, user5));
 
