@@ -37,6 +37,14 @@ public class UserController {
         16) каскады
         17) джоины jpql с дубликатами
         18) @Repository (QuerydslRepositorySupport)
+        19) Service vs. Facade
+        20) Entity -> Dto
+        21) Entity vs Model
+        22) Dto vs Model
+        23) Dto naming
+        24) findById returns Dto or Model?
+        25) DDD
+        26) @PersistenceContext
      */
 
     private final UserService userService;

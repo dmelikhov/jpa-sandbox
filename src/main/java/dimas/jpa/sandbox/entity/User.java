@@ -10,6 +10,8 @@ import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,4 +39,11 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @BatchSize(size = 10)
     private List<Post> posts;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status {
+        ACTIVE
+    }
 }
