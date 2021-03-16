@@ -1,3 +1,4 @@
 rootProject.name = 'jpa-sandbox'
 include 'application',
-        'domain'
+        'domain',
+        'platform'
