@@ -11,21 +11,22 @@ subprojects {
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '11'
 
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << '-parameters'
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = 'UTF-8'
+        options.compilerArgs << '-parameters'
     }
 
-    if (path != ':application') {
-        configurations.all {
-            if (canBeResolved) {
-                def configurations = project(':application').configurations
-                shouldResolveConsistentlyWith(configurations[name])
+    if (project.path != ':application') {
+        def primaryConfigurations = project(':application').configurations
+        configurations.configureEach { submoduleConfiguration ->
+            if (submoduleConfiguration.canBeResolved) {
+                submoduleConfiguration.shouldResolveConsistentlyWith(
+                        primaryConfigurations[submoduleConfiguration.name])
             }
         }
     }
 
-    configurations.all {
+    configurations.configureEach {
         resolutionStrategy.dependencySubstitution {
             def substituteVersion = { notation, a, b ->
                 substitute module("$notation:$a") with module("$notation:$b")
