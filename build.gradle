@@ -12,8 +12,27 @@ subprojects {
     sourceCompatibility = '11'
 
     tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
         options.compilerArgs << '-parameters'
+        options.encoding = 'UTF-8'
+    }
+
+    if (path != ':application') {
+        configurations.all {
+            if (canBeResolved) {
+                def configurations = project(':application').configurations
+                shouldResolveConsistentlyWith(configurations[name])
+            }
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy.dependencySubstitution {
+            def substituteVersion = { notation, a, b ->
+                substitute module("$notation:$a") with module("$notation:$b")
+            }
+            // https://bugs.mysql.com/bug.php?id=102321
+            substituteVersion('mysql:mysql-connector-java', '8.0.23', '8.0.22')
+        }
     }
 
     repositories {
@@ -27,21 +46,11 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.mockito:mockito-core'
     }
-}
 
-project(':application').afterEvaluate {
-    def artifacts = project(':application').configurations.compileClasspath
-            .resolvedConfiguration
-            .resolvedArtifacts
-
-    configure(subprojects - project(':application')) {
-        artifacts.each { artifact ->
-            dependencies {
-                constraints {
-                    implementation artifact.moduleVersion.toString()
-                }
-            }
-        }
+    test {
+        useJUnitPlatform()
     }
 }
