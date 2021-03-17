@@ -4,7 +4,7 @@ plugins {
     id 'org.springframework.boot' version '2.4.3' apply false
 }
 
-configure(subprojects - project(':platform')) {
+subprojects {
     apply plugin: 'java'
 
     group = 'dimas'
@@ -16,31 +16,32 @@ configure(subprojects - project(':platform')) {
         options.compilerArgs << '-parameters'
     }
 
-    configurations.all {
-        resolutionStrategy {
-            failOnVersionConflict()
-
-            dependencySubstitution {
-                def substituteVersion = { notation, a, b ->
-                    substitute module("$notation:$a") with module("$notation:$b")
-                }
-//                substituteVersion('com.google.code.findbugs:jsr305', '1.3.9', '3.0.2')
-//                substituteVersion('com.google.guava:guava', '18.0', '30.1-jre')
-                substituteVersion('mysql:mysql-connector-java', '8.0.23', '8.0.22')
-            }
-        }
-    }
-
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        implementation enforcedPlatform(project(':platform'))
-        annotationProcessor enforcedPlatform(project(':platform'))
+        implementation platform(SpringBootPlugin.BOM_COORDINATES)
+        annotationProcessor platform(SpringBootPlugin.BOM_COORDINATES)
 
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+    }
+}
+
+project(':application').afterEvaluate {
+    def artifacts = project(':application').configurations.compileClasspath
+            .resolvedConfiguration
+            .resolvedArtifacts
+
+    configure(subprojects - project(':application')) {
+        artifacts.each { artifact ->
+            dependencies {
+                constraints {
+                    implementation artifact.moduleVersion.toString()
+                }
+            }
+        }
     }
 }
