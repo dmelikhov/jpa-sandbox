@@ -16,16 +16,6 @@ subprojects {
         options.compilerArgs << '-parameters'
     }
 
-    if (project.path != ':application') {
-        def primaryConfigurations = project(':application').configurations
-        configurations.configureEach { submoduleConfiguration ->
-            if (submoduleConfiguration.canBeResolved) {
-                submoduleConfiguration.shouldResolveConsistentlyWith(
-                        primaryConfigurations[submoduleConfiguration.name])
-            }
-        }
-    }
-
     configurations.configureEach {
         resolutionStrategy.dependencySubstitution {
             def substituteVersion = { notation, a, b ->
