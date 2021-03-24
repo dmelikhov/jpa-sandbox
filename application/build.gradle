@@ -6,5 +6,6 @@ dependencies {
     implementation project(':domain')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.integralblue:log4jdbc-spring-boot-starter'
+//    runtimeOnly 'mysql:mysql-connector-java'
 }

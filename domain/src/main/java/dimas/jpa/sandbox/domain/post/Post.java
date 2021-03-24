@@ -1,4 +1,4 @@
-package dimas.jpa.sandbox.domain.user;
+package dimas.jpa.sandbox.domain.post;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,11 +11,11 @@ import javax.persistence.Id;
 
 @Entity
 @Getter @Setter @ToString
-public class User {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String text;
 }
