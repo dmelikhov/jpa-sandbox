@@ -31,14 +31,14 @@ subprojects {
     }
 
     dependencies {
+        constraints {
+        }
+
         implementation platform(SpringBootPlugin.BOM_COORDINATES)
         annotationProcessor platform(SpringBootPlugin.BOM_COORDINATES)
 
-        constraints {
-            runtimeOnly 'com.integralblue:log4jdbc-spring-boot-starter:2.0.0'
-        }
-
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-security'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'

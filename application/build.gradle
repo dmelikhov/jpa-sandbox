@@ -1,11 +1,16 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     id 'org.springframework.boot'
 }
 
 dependencies {
-    implementation project(':domain')
+    developmentOnly platform(SpringBootPlugin.BOM_COORDINATES)
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
+//    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    developmentOnly 'com.integralblue:log4jdbc-spring-boot-starter:2.0.0'
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'com.integralblue:log4jdbc-spring-boot-starter'
-//    runtimeOnly 'mysql:mysql-connector-java'
+
+    implementation project(':domain')
 }

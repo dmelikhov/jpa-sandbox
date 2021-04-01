@@ -15,11 +15,11 @@ import javax.annotation.PostConstruct;
 @Slf4j
 public class UserService {
 
-    private final UserRepository userRepository;
-    private final PostRepository postRepository;
-
     @Autowired
     private UserService userService;
+
+    private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     @PostConstruct
     public void init() {
@@ -36,5 +36,6 @@ public class UserService {
     @Transactional
     public void load() {
         log.info("UserService.load");
+        userRepository.findAll();
     }
 }
