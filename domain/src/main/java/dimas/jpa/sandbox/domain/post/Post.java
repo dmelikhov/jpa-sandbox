@@ -1,16 +1,20 @@
 package dimas.jpa.sandbox.domain.post;
 
+import dimas.jpa.sandbox.domain.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter @Setter @ToString
+@Accessors(chain = true)
 public class Post {
 
     @Id
@@ -18,4 +22,8 @@ public class Post {
     private Long id;
 
     private String text;
+
+    @ManyToOne
+    @ToString.Exclude
+    private User user;
 }
