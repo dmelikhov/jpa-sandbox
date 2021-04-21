@@ -1,51 +1,43 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
-    id 'org.springframework.boot' version '2.4.5' apply false
+    id 'org.springframework.boot' version '2.4.5'
+    id 'java'
 }
 
-subprojects {
-    apply plugin: 'java'
+group = 'dimas'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
 
-    group = 'dimas'
-    version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '11'
-
-    tasks.withType(JavaCompile).configureEach {
-        options.encoding = 'UTF-8'
-        options.compilerArgs << '-parameters'
-    }
-
-    configurations.configureEach {
-        resolutionStrategy.dependencySubstitution {
-            def substituteVersion = { notation, a, b ->
-                substitute module("$notation:$a") with module("$notation:$b")
-            }
-            // https://bugs.mysql.com/bug.php?id=102321
-            substituteVersion('mysql:mysql-connector-java', '8.0.23', '8.0.22')
+configurations.configureEach {
+    resolutionStrategy.dependencySubstitution {
+        def substituteVersion = { notation, a, b ->
+            substitute module("$notation:$a") with module("$notation:$b")
         }
+        // https://bugs.mysql.com/bug.php?id=102321
+        substituteVersion('mysql:mysql-connector-java', '8.0.23', '8.0.22')
     }
+}
 
-    repositories {
-        mavenCentral()
-    }
+repositories {
+    mavenCentral()
+}
 
-    dependencies {
-        constraints {
-        }
+dependencies {
+    implementation platform(SpringBootPlugin.BOM_COORDINATES)
+    annotationProcessor platform(SpringBootPlugin.BOM_COORDINATES)
+    developmentOnly platform(SpringBootPlugin.BOM_COORDINATES)
 
-        implementation platform(SpringBootPlugin.BOM_COORDINATES)
-        annotationProcessor platform(SpringBootPlugin.BOM_COORDINATES)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    developmentOnly 'com.integralblue:log4jdbc-spring-boot-starter:2.0.0'
+    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
 
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        implementation 'org.springframework.boot:spring-boot-starter-security'
-        compileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'org.mockito:mockito-core'
-    }
-
-    test {
-        useJUnitPlatform()
-    }
+test {
+    useJUnitPlatform()
 }

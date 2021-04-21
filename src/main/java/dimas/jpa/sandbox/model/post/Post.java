@@ -1,6 +1,6 @@
-package dimas.jpa.sandbox.domain.post;
+package dimas.jpa.sandbox.model.post;
 
-import dimas.jpa.sandbox.domain.user.User;
+import dimas.jpa.sandbox.model.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,7 +23,6 @@ public class Post {
 
     private String text;
 
-    @ManyToOne
-    @ToString.Exclude
+    @ManyToOne @ToString.Exclude
     private User user;
 }

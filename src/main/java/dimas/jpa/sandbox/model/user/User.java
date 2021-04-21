@@ -1,6 +1,6 @@
-package dimas.jpa.sandbox.domain.user;
+package dimas.jpa.sandbox.model.user;
 
-import dimas.jpa.sandbox.domain.post.Post;
+import dimas.jpa.sandbox.model.post.Post;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +30,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
-
-    @Version
-    private long version;
 
     public void addPost(Post post) {
         posts.add(post);

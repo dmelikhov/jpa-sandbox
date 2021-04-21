@@ -1,4 +1,4 @@
-package dimas.jpa.sandbox.domain.post;
+package dimas.jpa.sandbox.model.post;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

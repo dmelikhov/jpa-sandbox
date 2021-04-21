@@ -1,9 +1,9 @@
 package dimas.jpa.sandbox.service;
 
-import dimas.jpa.sandbox.domain.post.Post;
-import dimas.jpa.sandbox.domain.post.PostRepository;
-import dimas.jpa.sandbox.domain.user.User;
-import dimas.jpa.sandbox.domain.user.UserRepository;
+import dimas.jpa.sandbox.model.post.Post;
+import dimas.jpa.sandbox.model.post.PostRepository;
+import dimas.jpa.sandbox.model.user.User;
+import dimas.jpa.sandbox.model.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +47,9 @@ public class UserService {
 
     @Transactional
     public void task(int x) {
-        log.info("UserService.task[x={}]", x);
+        log.info("UserService.task");
         User user = userRepository.findByUsername(ADMIN);
-//        user.setUsername(user.getName() + x);
-//        setPosts(user, x);
+        setPosts(user, x);
         userRepository.save(user);
     }
 

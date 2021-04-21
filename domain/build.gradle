@@ -1,5 +1,0 @@
-dependencies {
-    implementation 'com.querydsl:querydsl-jpa'
-    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
-    annotationProcessor 'com.querydsl:querydsl-apt::jpa'
-}
